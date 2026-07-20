@@ -1,0 +1,66 @@
+model:
+  base_model: "Qwen/Qwen2.5-7B-Instruct"
+  lora_r: 16
+  lora_alpha: 32
+  lora_dropout: 0.05
+
+training:
+  num_epochs: 3
+  learning_rate: 2.0e-4
+  batch_size: 4
+  gradient_accumulation_steps: 4
+  warmup_ratio: 0.03
+  weight_decay: 0.01
+  max_seq_length: 1024
+  logging_steps: 10
+  save_steps: 100
+  eval_steps: 100
+  output_dir: "./outputs"
+  deepspeed_config: "train/deepspeed_config.json"
+  # Mac 兼容：若 DeepSpeed 不可用，自动降级为单卡 PyTorch 训练
+  fallback_to_single_gpu: true
+
+data:
+  source_type: "file"  # file 或 postgresql
+  source_path: "data/sample_input.json"
+  # 当 source_type=postgresql 时使用以下配置（通过环境变量覆盖更安全）
+  postgres_host: "localhost"
+  postgres_port: 5432
+  postgres_user: "postgres"
+  postgres_password: "postgres"
+  postgres_db: "agent_factory"
+  postgres_query: "SELECT task_id, type, payload, result FROM tasks WHERE status='completed'"
+  min_instruction_length: 10
+  max_code_lines: 200
+  quality_threshold: 0.5
+  train_val_test_split: [0.8, 0.1, 0.1]
+  output_dir: "./processed_data"
+  dedup_threshold: 0.8  # MinHash 相似度阈值，超过视为重复
+
+evaluation:
+  test_set_path: "evaluate/test_set/sample_test_cases.json"
+  pass_threshold:
+    accuracy: 0.85
+    code_quality: 80
+    perplexity_max: 15.0
+
+registry:
+  mlflow_tracking_uri: "http://localhost:5000"
+  model_name: "code-fix-model"
+
+deploy:
+  gray_stages:
+    - traffic_percent: 10
+      duration: "2h"
+    - traffic_percent: 50
+      duration: "6h"
+    - traffic_percent: 100
+      duration: "steady"
+
+api:
+  host: "0.0.0.0"
+  port: 8001
+
+logging:
+  level: "INFO"
+  format: "json"

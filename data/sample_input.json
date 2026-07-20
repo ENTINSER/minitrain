@@ -1,0 +1,82 @@
+[
+  {
+    "task_id": "task-001",
+    "error_type": "off_by_one",
+    "buggy_code": "def sum_list(arr):\n    total = 0\n    for i in range(len(arr) + 1):\n        total += arr[i]\n    return total",
+    "expected_behavior": "Iterate over all elements of arr without going past the last index.",
+    "fixed_code": "def sum_list(arr):\n    total = 0\n    for i in range(len(arr)):\n        total += arr[i]\n    return total",
+    "quality_score": 0.9
+  },
+  {
+    "task_id": "task-002",
+    "error_type": "null_pointer",
+    "buggy_code": "def greet(user):\n    return user.name.upper()",
+    "expected_behavior": "Return empty string or default greeting when user is None.",
+    "fixed_code": "def greet(user):\n    if user is None:\n        return ''\n    return user.name.upper()",
+    "quality_score": 0.85
+  },
+  {
+    "task_id": "task-003",
+    "error_type": "type_error",
+    "buggy_code": "def add(a, b):\n    return a + b\nadd('5', 3)",
+    "expected_behavior": "Convert string input to integer before addition.",
+    "fixed_code": "def add(a, b):\n    return int(a) + int(b)\nadd('5', 3)",
+    "quality_score": 0.8
+  },
+  {
+    "task_id": "task-004",
+    "error_type": "off_by_one",
+    "buggy_code": "def find_max(arr):\n    m = arr[0]\n    for i in range(1, len(arr) - 1):\n        if arr[i] > m:\n            m = arr[i]\n    return m",
+    "expected_behavior": "Compare every element including the last one.",
+    "fixed_code": "def find_max(arr):\n    m = arr[0]\n    for i in range(1, len(arr)):\n        if arr[i] > m:\n            m = arr[i]\n    return m",
+    "quality_score": 0.9
+  },
+  {
+    "task_id": "task-005",
+    "error_type": "null_pointer",
+    "buggy_code": "class Logger:\n    def log(self, msg):\n        self.writer.write(msg)\nlogger = Logger()\nlogger.log('hello')",
+    "expected_behavior": "Ensure writer is initialized before use or accept it as parameter.",
+    "fixed_code": "class Logger:\n    def __init__(self, writer):\n        self.writer = writer\n    def log(self, msg):\n        if self.writer:\n            self.writer.write(msg)\nlogger = Logger(open('log.txt', 'w'))\nlogger.log('hello')",
+    "quality_score": 0.85
+  },
+  {
+    "task_id": "task-006",
+    "error_type": "type_error",
+    "buggy_code": "def average(scores):\n    return sum(scores) / len(scores)\naverage([90, '85', 78])",
+    "expected_behavior": "Parse all score strings to integers before computing average.",
+    "fixed_code": "def average(scores):\n    scores = [int(s) for s in scores]\n    return sum(scores) / len(scores)\naverage([90, '85', 78])",
+    "quality_score": 0.8
+  },
+  {
+    "task_id": "task-007",
+    "error_type": "off_by_one",
+    "buggy_code": "def copy_except_first(src):\n    dst = []\n    for i in range(1, len(src) + 1):\n        dst.append(src[i])\n    return dst",
+    "expected_behavior": "Copy all elements except the first, without exceeding list bounds.",
+    "fixed_code": "def copy_except_first(src):\n    dst = []\n    for i in range(1, len(src)):\n        dst.append(src[i])\n    return dst",
+    "quality_score": 0.9
+  },
+  {
+    "task_id": "task-008",
+    "error_type": "null_pointer",
+    "buggy_code": "def get_config():\n    return None\nprint(get_config().get('key'))",
+    "expected_behavior": "Handle None return safely.",
+    "fixed_code": "def get_config():\n    return None\ncfg = get_config()\nprint(cfg.get('key') if cfg else 'default')",
+    "quality_score": 0.85
+  },
+  {
+    "task_id": "task-009",
+    "error_type": "type_error",
+    "buggy_code": "def concat(a, b):\n    return a + b\nconcat(10, 'items')",
+    "expected_behavior": "Convert number to string before concatenation.",
+    "fixed_code": "def concat(a, b):\n    return str(a) + str(b)\nconcat(10, 'items')",
+    "quality_score": 0.8
+  },
+  {
+    "task_id": "task-010",
+    "error_type": "off_by_one",
+    "buggy_code": "def factorial(n):\n    result = 1\n    for i in range(n):\n        result *= i\n    return result",
+    "expected_behavior": "Multiply numbers from 1 to n inclusive.",
+    "fixed_code": "def factorial(n):\n    result = 1\n    for i in range(1, n + 1):\n        result *= i\n    return result",
+    "quality_score": 0.9
+  }
+]

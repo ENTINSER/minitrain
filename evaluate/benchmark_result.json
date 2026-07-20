@@ -1,0 +1,425 @@
+{
+  "old_model": {
+    "name": "mlx-community/Qwen2.5-1.5B-Instruct-4bit",
+    "accuracy": 70.0,
+    "code_quality": 100.0,
+    "ppl": 3.815
+  },
+  "new_model": {
+    "name": "mlx-community/Qwen2.5-1.5B-Instruct-4bit-LoRA-codefix",
+    "accuracy": 75.0,
+    "code_quality": 100.0,
+    "ppl": 2.854
+  },
+  "improvement": {
+    "accuracy_delta": 5.0,
+    "code_quality_delta": 0.0,
+    "ppl_delta": 0.961
+  },
+  "details": {
+    "old": [
+      {
+        "id": "tc-001",
+        "error_type": "off_by_one",
+        "passed": true,
+        "generated_code": "def sum_list(arr):\n    total = 0\n    for i in range(len(arr)):\n        total += arr[i]\n    return total",
+        "stdout": "",
+        "stderr": "",
+        "code_quality": 100.0,
+        "gen_time_sec": 1.22
+      },
+      {
+        "id": "tc-002",
+        "error_type": "off_by_one",
+        "passed": true,
+        "generated_code": "def find_max(arr):\n    m = arr[0]\n    for i in range(1, len(arr)):\n        if arr[i] > m:\n            m = arr[i]\n    return m",
+        "stdout": "",
+        "stderr": "",
+        "code_quality": 100.0,
+        "gen_time_sec": 0.906
+      },
+      {
+        "id": "tc-003",
+        "error_type": "null_pointer",
+        "passed": false,
+        "generated_code": "def greet(user):\n    if user is None:\n        return \"User not provided\"\n    else:\n        return user.name.upper()",
+        "stdout": "",
+        "stderr": "Traceback (most recent call last):\n  File \"/var/folders/n5/n9fccyz93_lbsfwwhtdbqrt00000gn/T/tmp1vr0g8gu.py\", line 7, in <module>\n    assert greet(None) == ''\n           ^^^^^^^^^^^^^^^^^\nAssertionError\n",
+        "code_quality": 100.0,
+        "gen_time_sec": 1.096
+      },
+      {
+        "id": "tc-004",
+        "error_type": "null_pointer",
+        "passed": false,
+        "generated_code": "class Logger:\n    def __init__(self, writer):\n        self.writer = writer\n\n    def log(self, msg):\n        self.writer.write(msg)",
+        "stdout": "",
+        "stderr": "Traceback (most recent call last):\n  File \"/var/folders/n5/n9fccyz93_lbsfwwhtdbqrt00000gn/T/tmpc_3ne9io.py\", line 8, in <module>\n    l = Logger()\n        ^^^^^^^^\nTypeError: Logger.__init__() missing 1 required positional argument: 'writer'\n",
+        "code_quality": 100.0,
+        "gen_time_sec": 1.273
+      },
+      {
+        "id": "tc-005",
+        "error_type": "type_error",
+        "passed": false,
+        "generated_code": "def add(a, b):\n    if isinstance(a, (int, float)) and isinstance(b, (int, float)):\n        return a + b\n    else:\n        raise ValueError(\"Inputs must be of type int or float\")\n\n# Test cases\nprint(add('5', 3))  # Should return 8\nprint(add(5, '3'))  # Should return 8\nprint(add('5', '3'))  # Should raise ValueError\nprint(add(5, 3))  # Should return 8",
+        "stdout": "",
+        "stderr": "Traceback (most recent call last):\n  File \"/var/folders/n5/n9fccyz93_lbsfwwhtdbqrt00000gn/T/tmpdcb96rl_.py\", line 8, in <module>\n    print(add('5', 3))  # Should return 8\n          ^^^^^^^^^^^\n  File \"/var/folders/n5/n9fccyz93_lbsfwwhtdbqrt00000gn/T/tmpdcb96rl_.py\", line 5, in add\n    raise ValueError(\"Inputs must be of type int or float\")\nValueError: Inputs must be of type int or float\n",
+        "code_quality": 100.0,
+        "gen_time_sec": 1.827
+      },
+      {
+        "id": "tc-006",
+        "error_type": "type_error",
+        "passed": true,
+        "generated_code": "def average(scores):\n    return sum(int(score) for score in scores) / len(scores)\naverage([90, '85', 78])",
+        "stdout": "",
+        "stderr": "",
+        "code_quality": 100.0,
+        "gen_time_sec": 1.103
+      },
+      {
+        "id": "tc-007",
+        "error_type": "off_by_one",
+        "passed": true,
+        "generated_code": "def copy_except_first(src):\n    dst = src[1:]\n    return dst",
+        "stdout": "",
+        "stderr": "",
+        "code_quality": 100.0,
+        "gen_time_sec": 0.901
+      },
+      {
+        "id": "tc-008",
+        "error_type": "null_pointer",
+        "passed": false,
+        "generated_code": "def get_config(config):\n    return config\n\nprint(get_config().get('key'))",
+        "stdout": "",
+        "stderr": "Traceback (most recent call last):\n  File \"/var/folders/n5/n9fccyz93_lbsfwwhtdbqrt00000gn/T/tmp1w4zltjg.py\", line 4, in <module>\n    print(get_config().get('key'))\n          ^^^^^^^^^^^^\nTypeError: get_config() missing 1 required positional argument: 'config'\n",
+        "code_quality": 100.0,
+        "gen_time_sec": 1.173
+      },
+      {
+        "id": "tc-009",
+        "error_type": "type_error",
+        "passed": true,
+        "generated_code": "def concat(a, b):\n    return str(a) + str(b)\nconcat(10, 'items')",
+        "stdout": "",
+        "stderr": "",
+        "code_quality": 100.0,
+        "gen_time_sec": 0.998
+      },
+      {
+        "id": "tc-010",
+        "error_type": "off_by_one",
+        "passed": true,
+        "generated_code": "def factorial(n):\n    if n == 0:\n        return 1\n    result = 1\n    for i in range(1, n + 1):\n        result *= i\n    return result",
+        "stdout": "",
+        "stderr": "",
+        "code_quality": 100.0,
+        "gen_time_sec": 1.547
+      },
+      {
+        "id": "tc-011",
+        "error_type": "off_by_one",
+        "passed": true,
+        "generated_code": "def reverse(arr):\n    out = []\n    for i in range(len(arr) - 1, -1, -1):\n        out.append(arr[i])\n    return out",
+        "stdout": "",
+        "stderr": "",
+        "code_quality": 100.0,
+        "gen_time_sec": 1.118
+      },
+      {
+        "id": "tc-012",
+        "error_type": "null_pointer",
+        "passed": true,
+        "generated_code": "def process(item):\n    if item is None:\n        return None\n    else:\n        return item.value * 2",
+        "stdout": "",
+        "stderr": "",
+        "code_quality": 100.0,
+        "gen_time_sec": 0.909
+      },
+      {
+        "id": "tc-013",
+        "error_type": "type_error",
+        "passed": true,
+        "generated_code": "def multiply(a, b):\n    return int(a) * b\n\nmultiply('3', 4)",
+        "stdout": "",
+        "stderr": "",
+        "code_quality": 100.0,
+        "gen_time_sec": 0.995
+      },
+      {
+        "id": "tc-014",
+        "error_type": "off_by_one",
+        "passed": true,
+        "generated_code": "def suffixes(s):\n    res = []\n    for i in range(len(s)):\n        res.append(s[i:])\n    return res",
+        "stdout": "",
+        "stderr": "",
+        "code_quality": 100.0,
+        "gen_time_sec": 0.906
+      },
+      {
+        "id": "tc-015",
+        "error_type": "null_pointer",
+        "passed": true,
+        "generated_code": "def read_file(path):\n    if path is None:\n        return \"\"\n    else:\n        return open(path).read()",
+        "stdout": "",
+        "stderr": "",
+        "code_quality": 100.0,
+        "gen_time_sec": 1.016
+      },
+      {
+        "id": "tc-016",
+        "error_type": "type_error",
+        "passed": false,
+        "generated_code": "def join_items(items, sep):\n    return sep.join(items)\n\n# Example usage\nprint(join_items([1, 2, 3], ','))",
+        "stdout": "",
+        "stderr": "Traceback (most recent call last):\n  File \"/var/folders/n5/n9fccyz93_lbsfwwhtdbqrt00000gn/T/tmp3ctdycs0.py\", line 5, in <module>\n    print(join_items([1, 2, 3], ','))\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/var/folders/n5/n9fccyz93_lbsfwwhtdbqrt00000gn/T/tmp3ctdycs0.py\", line 2, in join_items\n    return sep.join(items)\n           ^^^^^^^^^^^^^^^\nTypeError: sequence item 0: expected str instance, int found\n",
+        "code_quality": 100.0,
+        "gen_time_sec": 0.943
+      },
+      {
+        "id": "tc-017",
+        "error_type": "off_by_one",
+        "passed": true,
+        "generated_code": "def prefixes(s):\n    res = []\n    for i in range(0, len(s)):\n        res.append(s[:i+1])\n    return res",
+        "stdout": "",
+        "stderr": "",
+        "code_quality": 100.0,
+        "gen_time_sec": 0.781
+      },
+      {
+        "id": "tc-018",
+        "error_type": "null_pointer",
+        "passed": false,
+        "generated_code": "def fetch_user(id):\n    # Simulate fetching a user from a database\n    user = {\"id\": id, \"email\": \"user@example.com\"}\n    return user\n\nuser = fetch_user(1)\nprint(user['email'])",
+        "stdout": "user@example.com\n",
+        "stderr": "Traceback (most recent call last):\n  File \"/var/folders/n5/n9fccyz93_lbsfwwhtdbqrt00000gn/T/tmp2se0onmk.py\", line 10, in <module>\n    assert (user.email if user else 'unknown') == 'unknown'\n            ^^^^^^^^^^\nAttributeError: 'dict' object has no attribute 'email'\n",
+        "code_quality": 100.0,
+        "gen_time_sec": 1.132
+      },
+      {
+        "id": "tc-019",
+        "error_type": "type_error",
+        "passed": true,
+        "generated_code": "def subtract(a, b):\n    return int(a) - int(b)\nsubtract('10', 3)",
+        "stdout": "",
+        "stderr": "",
+        "code_quality": 100.0,
+        "gen_time_sec": 0.746
+      },
+      {
+        "id": "tc-020",
+        "error_type": "off_by_one",
+        "passed": true,
+        "generated_code": "def is_palindrome(s):\n    for i in range(len(s) // 2):\n        if s[i] != s[len(s) - i - 1]:\n            return False\n    return True",
+        "stdout": "",
+        "stderr": "",
+        "code_quality": 100.0,
+        "gen_time_sec": 1.42
+      }
+    ],
+    "new": [
+      {
+        "id": "tc-001",
+        "error_type": "off_by_one",
+        "passed": true,
+        "generated_code": "def sum_list(arr):\n    total = 0\n    for i in range(len(arr)):\n        total += arr[i]\n    return total",
+        "stdout": "",
+        "stderr": "",
+        "code_quality": 100.0,
+        "gen_time_sec": 0.966
+      },
+      {
+        "id": "tc-002",
+        "error_type": "off_by_one",
+        "passed": true,
+        "generated_code": "def find_max(arr):\n    m = arr[0]\n    for i in range(1, len(arr)):\n        if arr[i] > m:\n            m = arr[i]\n    return m",
+        "stdout": "",
+        "stderr": "",
+        "code_quality": 100.0,
+        "gen_time_sec": 0.621
+      },
+      {
+        "id": "tc-003",
+        "error_type": "null_pointer",
+        "passed": false,
+        "generated_code": "def greet(user):\n    if user is None:\n        return 'User not provided.'\n    return user.name.upper()",
+        "stdout": "",
+        "stderr": "Traceback (most recent call last):\n  File \"/var/folders/n5/n9fccyz93_lbsfwwhtdbqrt00000gn/T/tmpno25sn_z.py\", line 6, in <module>\n    assert greet(None) == ''\n           ^^^^^^^^^^^^^^^^^\nAssertionError\n",
+        "code_quality": 100.0,
+        "gen_time_sec": 0.429
+      },
+      {
+        "id": "tc-004",
+        "error_type": "null_pointer",
+        "passed": false,
+        "generated_code": "class Logger:\n    def __init__(self, writer):\n        self.writer = writer\n\n    def log(self, msg):\n        if self.writer:\n            self.writer.write(msg)",
+        "stdout": "",
+        "stderr": "Traceback (most recent call last):\n  File \"/var/folders/n5/n9fccyz93_lbsfwwhtdbqrt00000gn/T/tmp9zcdy8xy.py\", line 9, in <module>\n    l = Logger()\n        ^^^^^^^^\nTypeError: Logger.__init__() missing 1 required positional argument: 'writer'\n",
+        "code_quality": 100.0,
+        "gen_time_sec": 0.57
+      },
+      {
+        "id": "tc-005",
+        "error_type": "type_error",
+        "passed": false,
+        "generated_code": "def add(a, b):\n    if isinstance(a, (int, float)) and isinstance(b, (int, float)):\n        return a + b\n    else:\n        return str(a) + str(b)",
+        "stdout": "",
+        "stderr": "Traceback (most recent call last):\n  File \"/var/folders/n5/n9fccyz93_lbsfwwhtdbqrt00000gn/T/tmp47fdpikx.py\", line 7, in <module>\n    assert add('5', 3) == 8\n           ^^^^^^^^^^^^^^^^\nAssertionError\n",
+        "code_quality": 100.0,
+        "gen_time_sec": 0.635
+      },
+      {
+        "id": "tc-006",
+        "error_type": "type_error",
+        "passed": true,
+        "generated_code": "def average(scores):\n    scores = [int(s) for s in scores]\n    return sum(scores) / len(scores)\naverage([90, '85', 78])",
+        "stdout": "",
+        "stderr": "",
+        "code_quality": 100.0,
+        "gen_time_sec": 0.57
+      },
+      {
+        "id": "tc-007",
+        "error_type": "off_by_one",
+        "passed": true,
+        "generated_code": "def copy_except_first(src):\n    dst = []\n    for i in range(1, len(src)):\n        dst.append(src[i])\n    return dst",
+        "stdout": "",
+        "stderr": "",
+        "code_quality": 100.0,
+        "gen_time_sec": 0.501
+      },
+      {
+        "id": "tc-008",
+        "error_type": "null_pointer",
+        "passed": true,
+        "generated_code": "def get_config():\n    default = {}\n    config = None\n    if config is not None:\n        default.update(config)\n    return default",
+        "stdout": "",
+        "stderr": "",
+        "code_quality": 100.0,
+        "gen_time_sec": 0.474
+      },
+      {
+        "id": "tc-009",
+        "error_type": "type_error",
+        "passed": true,
+        "generated_code": "def concat(a, b):\n    return str(a) + str(b)\nconcat(10, 'items')",
+        "stdout": "",
+        "stderr": "",
+        "code_quality": 100.0,
+        "gen_time_sec": 0.43
+      },
+      {
+        "id": "tc-010",
+        "error_type": "off_by_one",
+        "passed": true,
+        "generated_code": "def factorial(n):\n    result = 1\n    for i in range(1, n + 1):\n        result *= i\n    return result",
+        "stdout": "",
+        "stderr": "",
+        "code_quality": 100.0,
+        "gen_time_sec": 0.518
+      },
+      {
+        "id": "tc-011",
+        "error_type": "off_by_one",
+        "passed": true,
+        "generated_code": "def reverse(arr):\n    out = []\n    for i in range(len(arr) - 1, -1, -1):\n        out.append(arr[i])\n    return out",
+        "stdout": "",
+        "stderr": "",
+        "code_quality": 100.0,
+        "gen_time_sec": 0.587
+      },
+      {
+        "id": "tc-012",
+        "error_type": "null_pointer",
+        "passed": true,
+        "generated_code": "def process(item):\n    if item is None:\n        return None\n    return item.value * 2",
+        "stdout": "",
+        "stderr": "",
+        "code_quality": 100.0,
+        "gen_time_sec": 0.438
+      },
+      {
+        "id": "tc-013",
+        "error_type": "type_error",
+        "passed": true,
+        "generated_code": "def multiply(a, b):\n    return int(a) * int(b)\nmultiply('3', 4)",
+        "stdout": "",
+        "stderr": "",
+        "code_quality": 100.0,
+        "gen_time_sec": 0.429
+      },
+      {
+        "id": "tc-014",
+        "error_type": "off_by_one",
+        "passed": false,
+        "generated_code": "def suffixes(s):\n    res = []\n    for i in range(1, len(s) + 1):\n        res.append(s[i:])\n    return res",
+        "stdout": "",
+        "stderr": "Traceback (most recent call last):\n  File \"/var/folders/n5/n9fccyz93_lbsfwwhtdbqrt00000gn/T/tmpfebwbfdb.py\", line 7, in <module>\n    assert suffixes('abc') == ['abc', 'bc', 'c']\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n",
+        "code_quality": 100.0,
+        "gen_time_sec": 0.551
+      },
+      {
+        "id": "tc-015",
+        "error_type": "null_pointer",
+        "passed": true,
+        "generated_code": "def read_file(path):\n    if path is None:\n        return ''\n    return open(path).read()",
+        "stdout": "",
+        "stderr": "",
+        "code_quality": 100.0,
+        "gen_time_sec": 0.412
+      },
+      {
+        "id": "tc-016",
+        "error_type": "type_error",
+        "passed": true,
+        "generated_code": "def join_items(items, sep):\n    return sep.join(map(str, items))",
+        "stdout": "",
+        "stderr": "",
+        "code_quality": 100.0,
+        "gen_time_sec": 0.369
+      },
+      {
+        "id": "tc-017",
+        "error_type": "off_by_one",
+        "passed": true,
+        "generated_code": "def prefixes(s):\n    res = []\n    for i in range(1, len(s) + 1):\n        res.append(s[:i])\n    return res",
+        "stdout": "",
+        "stderr": "",
+        "code_quality": 100.0,
+        "gen_time_sec": 0.536
+      },
+      {
+        "id": "tc-018",
+        "error_type": "null_pointer",
+        "passed": false,
+        "generated_code": "def fetch_user(id):\n    try:\n        return {'id': id}\n    except KeyError:\n        return {'id': 'missing'}",
+        "stdout": "",
+        "stderr": "Traceback (most recent call last):\n  File \"/var/folders/n5/n9fccyz93_lbsfwwhtdbqrt00000gn/T/tmpju27cjss.py\", line 8, in <module>\n    assert (user.email if user else 'unknown') == 'unknown'\n            ^^^^^^^^^^\nAttributeError: 'dict' object has no attribute 'email'\n",
+        "code_quality": 100.0,
+        "gen_time_sec": 0.472
+      },
+      {
+        "id": "tc-019",
+        "error_type": "type_error",
+        "passed": true,
+        "generated_code": "def subtract(a, b):\n    return int(a) - int(b)",
+        "stdout": "",
+        "stderr": "",
+        "code_quality": 100.0,
+        "gen_time_sec": 0.357
+      },
+      {
+        "id": "tc-020",
+        "error_type": "off_by_one",
+        "passed": true,
+        "generated_code": "def is_palindrome(s):\n    def helper(left, right):\n        if left >= right:\n            return True\n        if s[left] != s[right]:\n            return False\n        return helper(left + 1, right - 1)\n\n    return helper(0, len(s) - 1)",
+        "stdout": "",
+        "stderr": "",
+        "code_quality": 100.0,
+        "gen_time_sec": 0.835
+      }
+    ]
+  }
+}

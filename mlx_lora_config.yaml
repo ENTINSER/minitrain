@@ -1,0 +1,29 @@
+model: "mlx-community/Qwen2.5-1.5B-Instruct-4bit"
+train: true
+data: "data/mlx_lora"
+fine_tune_type: "lora"
+optimizer: "adam"
+batch_size: 2
+iters: 120
+val_batches: -1
+learning_rate: 2.0e-4
+steps_per_report: 5
+steps_per_eval: 25
+grad_accumulation_steps: 2
+max_seq_length: 512
+adapter_path: "checkpoints/lora-codefix"
+save_every: 60
+test: true
+test_batches: -1
+seed: 42
+num_layers: 16
+grad_checkpoint: false
+lora_parameters:
+  rank: 8
+  scale: 2.0
+  dropout: 0.05
+  keys:
+    - "self_attn.q_proj"
+    - "self_attn.k_proj"
+    - "self_attn.v_proj"
+    - "self_attn.o_proj"

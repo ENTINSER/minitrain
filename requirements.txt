@@ -1,0 +1,19 @@
+fastapi
+uvicorn
+pydantic
+pyyaml
+pandas
+datasketch
+sqlalchemy
+psycopg2-binary
+transformers
+peft
+accelerate
+# deepspeed requires Linux and a compatible CUDA/ROCm toolchain
+deepspeed; sys_platform == 'linux'
+torch
+mlflow
+scipy
+pylint
+python-json-logger
+prometheus-client

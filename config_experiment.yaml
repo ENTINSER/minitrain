@@ -1,0 +1,64 @@
+model:
+  base_model: "mlx-community/Qwen2.5-1.5B-Instruct-4bit"
+  lora_r: 8
+  lora_alpha: 16
+  lora_dropout: 0.05
+
+training:
+  num_epochs: 3
+  learning_rate: 2.0e-4
+  batch_size: 2
+  gradient_accumulation_steps: 2
+  warmup_ratio: 0.03
+  weight_decay: 0.01
+  max_seq_length: 512
+  logging_steps: 5
+  save_steps: 100
+  eval_steps: 25
+  output_dir: "checkpoints/lora-codefix"
+  deepspeed_config: null
+  fallback_to_single_gpu: true
+
+data:
+  source_type: "file"
+  source_path: "data/experiment_raw.json"
+  postgres_host: "localhost"
+  postgres_port: 5432
+  postgres_user: "postgres"
+  postgres_password: "postgres"
+  postgres_db: "agent_factory"
+  postgres_query: "SELECT task_id, type, payload, result FROM tasks WHERE status='completed'"
+  min_instruction_length: 10
+  max_code_lines: 200
+  quality_threshold: 0.5
+  train_val_test_split: [0.8, 0.1, 0.1]
+  output_dir: "processed_data"
+  dedup_threshold: 0.8
+
+evaluation:
+  test_set_path: "evaluate/test_set/sample_test_cases.json"
+  pass_threshold:
+    accuracy: 0.85
+    code_quality: 80
+    perplexity_max: 15.0
+
+registry:
+  mlflow_tracking_uri: "file:///Users/mingrun/minitrain/mlruns"
+  model_name: "code-fix-lora"
+
+deploy:
+  gray_stages:
+    - traffic_percent: 10
+      duration: "2h"
+    - traffic_percent: 50
+      duration: "6h"
+    - traffic_percent: 100
+      duration: "steady"
+
+api:
+  host: "0.0.0.0"
+  port: 8001
+
+logging:
+  level: "INFO"
+  format: "json"
